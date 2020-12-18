@@ -28,6 +28,9 @@ def get_templates():
     templates = []
     for template_file in template_files:
         name, extension = os.path.splitext(template_file)
+        # ignore jinja macro files
+        if extension == ".jinja":
+            continue
         if extension == ".tex":
             template = tex_env.get_template(template_file)
         else:
@@ -36,14 +39,14 @@ def get_templates():
     return templates
 
 # get resume file names, make folders for each resume
-# store (resume_dict, resume_file_name, resume_file_name.json) as a triple
+# store (resume_dict, resume_file_name) as a tuple
 def get_resumes():
     resumes = []
     for resume_file in resume_files:
-        with open("resumes/resume_file", "r") as f:
+        with open("json_resumes/" + resume_file, "r") as f:
             resume_dict = json.load(f)
         name, _ = os.path.splitext(resume_file)
-        resumes.append((resume_dict, resume_file, name))
+        resumes.append((resume_dict, name))
 
         # make a directory for the resume if there isn't already one
         if name not in os.listdir("resumes"):
@@ -54,9 +57,10 @@ def get_resumes():
 for template_triple in get_templates():
     template, extension, name = template_triple
 
-    for resume_triple in get_resumes():
+    for resume_tuple in get_resumes():
 
-        resume_dict, file_name, file_dir = resume_triple
+        resume_dict, file_name = resume_tuple
+        file_dir = file_name
 
         # make the file path
         file_path = "./resumes/" + file_dir + "/" + file_name + extension
@@ -64,7 +68,7 @@ for template_triple in get_templates():
         print("Writing " + file_name + extension + "...")
 
         # write the output file
-        template.stream(resume_type=resume_dict).dump(file_path)
+        template.stream(resume=resume_dict).dump(file_path)
 
         # if the template is .tex, compile the tex file
         if extension == ".tex":

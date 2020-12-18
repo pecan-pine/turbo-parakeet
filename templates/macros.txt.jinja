@@ -1,0 +1,41 @@
+{% macro work_section(work_type, display_name) %}
+{% if work_type in resume %}
+
+{{ display_name }}
+-------------------------------------------------------------------
+
+{% for work in resume[work_type] %}
+{% if work_type == "work" %}
+{{ work.company }}--{{ work.startDate }}-{{ work.endDate }}--{{ work.position }}
+{% endif %}
+{% if work_type == "volunteer" %}
+{{ work.organization }}--{{ work.startDate }}-{{ work.endDate }}--{{ work.position }}
+{% endif %}
+{{ work.summary|wordwrap }}
+	{% if "highlights" in work %}
+        {% for highlight in work.highlights %}
+- {{ highlight|wordwrap }}
+        {% endfor %}
+	{% endif %}
+
+{% endfor %}
+{% endif %}
+{% endmacro %}
+
+{% macro skills_interests_section(type, display_name) %}
+{% if type in resume %}
+
+{{ display_name }}
+-------------------------------------------------------------------
+
+{% for item in resume[type] %}
+{% if type == "skills" %}
+{{ item.name }}--{{ item.level }}:
+{% endif %}
+    {% if item.keywords %}
+{% for keyword in item.keywords[:-1] %}{{ keyword }}, {% endfor %}{{ item.keywords[-1] }}.
+    {% endif %}
+
+{% endfor %}
+{% endif %}
+{% endmacro %}

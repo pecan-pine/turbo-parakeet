@@ -1,0 +1,48 @@
+
+John Doe
+
+john@gmail.com
+http://johndoe.com
+
+A summary of John Doe...
+
+Education
+-------------------------------------------------------------------
+
+University--2011-01-01-2013-01-01
+Bachelor--Software Development
+4.0
+- DB1101 - Basic SQL
+
+
+Work Experience
+-------------------------------------------------------------------
+
+Company--2013-01-01-2014-01-01--President
+Description...
+- Started the company
+
+
+
+Skills
+-------------------------------------------------------------------
+
+Web Development--Master:
+HTML, CSS, Javascript.
+
+
+Interests
+-------------------------------------------------------------------
+
+Ferrets, Unicorns.
+
+
+
+Volunteer
+-------------------------------------------------------------------
+
+Organization--2012-01-01-2013-01-01--Volunteer
+Description...
+- Awarded 'Volunteer of the Month'
+
+

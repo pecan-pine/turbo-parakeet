@@ -1,0 +1,52 @@
+{# Jinja template to produce plain-text resume #}
+{% import "macros.txt.jinja" as m with context %}
+
+{{ resume.basics.name }}
+
+{{ resume.basics.email }}
+{{ resume.basics.website }}
+
+{{ resume.basics.summary|wordwrap }}
+
+{# ---education section--- #}
+{% if "education" in resume %}
+Education
+-------------------------------------------------------------------
+
+{% for school in resume.education %}
+{{ school.institution }}--{{ school.startDate }}-{{ school.endDate }}
+{{ school.studyType }}--{{ school.area|wordwrap }}
+{{ school.gpa }}
+    {% if "courses" in school %}
+        {% for course in school.courses %}
+- {{ course|wordwrap  }}
+        {% endfor %}
+    {% endif %}
+
+{% endfor %}
+{% endif %}
+{# ---end education section--- #}
+{# --work_experience section--- #}
+{{ m.work_section("work", "Work Experience") }}
+{# ---end work_experience section--- #}
+{# ---begin skills section--- #}
+{% if "skills" in resume %}
+
+Skills
+-------------------------------------------------------------------
+
+{% for skill in resume.skills %}
+{{ skill.name }}--{{ skill.level }}:
+    {% if skill.keywords %}
+{% for keyword in skill.keywords[:-1] %}{{ keyword }}, {% endfor %}{{ skill.keywords[-1] }}.
+    {% endif %}
+
+{% endfor %}
+{% endif %}
+{# ---end skills section--- #}
+{# ---interests section--- #}
+{{ m.skills_interests_section("interests", "Interests") }}
+{# ---end interests section--- #}
+{# ---volunteer section--- #}
+{{ m.work_section("volunteer", "Volunteer") }}
+{# ---end volunteer section--- #}
